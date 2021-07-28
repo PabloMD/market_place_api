@@ -23,6 +23,8 @@ default: &default
 
 development:
   <<: *default
+  username: pablo
+  password: qwerty
   database: market_place_api_development
 
   # The specified database role being used to connect to postgres.
