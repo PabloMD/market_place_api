@@ -1,6 +1,5 @@
 class Api::V1::ProductsController < ApplicationController
   before_action :set_product, only: %i[show update destroy]
-  before_action :set_products, only: %i[index]
   before_action :check_login, only: %i[create]
   before_action :check_owner, only: %i[update destroy]
 
@@ -10,6 +9,7 @@ class Api::V1::ProductsController < ApplicationController
   end
 
   def index
+    @products = Product.search(params)
     render json: ProductSerializer.new(@products).serializable_hash.to_json
   end
 
@@ -43,10 +43,6 @@ class Api::V1::ProductsController < ApplicationController
 
   def set_product
     @product = Product.find(params[:id])
-  end
-
-  def set_products
-    @products = Product.all
   end
 
   def check_owner
